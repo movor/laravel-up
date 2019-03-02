@@ -77,9 +77,9 @@ function ll($var, $level = 'debug')
 /**
  * Chance to $win or $loose variables/callbacks
  *
- * @param int           $percent In case percent not between 0 - 100, return false
- * @param Closure|mixed $win     Callback to call or value to return if chances is fulfilled
- * @param mixed         $loose   Callback to call or value to return if chances is not fulfilled
+ * @param int           $percent Percent of chance to win
+ * @param Closure|mixed $win     Callback to call or value to return if turn win
+ * @param mixed         $loose   Callback to call or value to return if turn loose
  *
  * @return mixed
  */
@@ -89,16 +89,7 @@ function chance($percent = 50, $win = true, $loose = false)
         throw new \InvalidArgumentException('Percent needs to be a number or numeric string');
     }
 
-    // Normalize percent
-    if ($percent < 0) {
-        $percent = 0;
-    } elseif ($percent > 100) {
-        $percent = 100;
-    } else {
-        $percent = (int) $percent;
-    }
-
-    return (rand(0, 100) <= $percent)
+    return (rand(1, 100) <= $percent)
         // Win
         ? (is_callable($win) ? $win() : $win)
         // Loose
