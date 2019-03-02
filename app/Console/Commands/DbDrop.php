@@ -80,7 +80,7 @@ class DbDrop extends Command
                 DB::statement('SET FOREIGN_KEY_CHECKS = 0');
                 foreach ($tables as $table) {
                     $this->comment("Dropping {$table->$colname} table");
-                    DB::unprepared("DROP TABLE {$table->$colname}");
+                    DB::unprepared("DROP TABLE `{$table->$colname}`");
                 }
                 DB::statement('SET FOREIGN_KEY_CHECKS = 1');
                 DB::commit();
@@ -104,7 +104,7 @@ class DbDrop extends Command
                 DB::beginTransaction();
                 foreach ($views as $table) {
                     $this->comment("Dropping {$table->$colname} view");
-                    DB::unprepared("DROP VIEW {$table->$colname}");
+                    DB::unprepared("DROP VIEW `{$table->$colname}`");
                 }
                 DB::commit();
             } else {
