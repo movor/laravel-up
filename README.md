@@ -1,7 +1,7 @@
-# Luna (Laravel 5.7)
+# LaravelUp (Laravel 5.7)
 
-[![Downloads](https://poser.pugx.org/movor/luna/downloads)](https://packagist.org/packages/movor/luna)
-[![License](https://poser.pugx.org/movor/luna/license)](https://packagist.org/packages/movor/luna)
+[![Downloads](https://poser.pugx.org/movor/laravel-up/downloads)](https://packagist.org/packages/movor/laravel-up)
+[![License](https://poser.pugx.org/movor/laravel-up/license)](https://packagist.org/packages/movor/laravel-up)
 
 ### Laravel framework packed with tools to get started fast
 
