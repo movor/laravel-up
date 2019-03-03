@@ -62,6 +62,7 @@ abstract class ImageCastBase extends CustomCastBase
                 // Store other image sizes
                 foreach (static::imageSizes() as $imageSize) {
                     list($width, $height) = explode('x', $imageSize);
+                    $optimalImageQuality = $this->optimizeImageQuality($width, $height, $imageQuality);
 
                     // Variant image name and path
                     $variantName = $filename . '-' . $imageSize . '.' . $extension;
@@ -69,7 +70,7 @@ abstract class ImageCastBase extends CustomCastBase
 
                     // Save image with defined quality
                     (clone $originalImage)->fit($width, $height)
-                        ->save(storage_path('app/' . $variantRelPath), $imageQuality);
+                        ->save(storage_path('app/' . $variantRelPath), $optimalImageQuality);
                 }
             };
         } elseif (!is_null($newValue)) {
@@ -101,6 +102,33 @@ abstract class ImageCastBase extends CustomCastBase
     }
 
     /**
+     * Optimize image quality.
+     * This is needed because if we set quality to e.g 75
+     * small images (less than 300x300px) quality will be bad
+     *
+     * @param     $width
+     * @param     $height
+     * @param int $baseQuality
+     *
+     * @return int
+     *
+     */
+    protected function optimizeImageQuality($width, $height, $baseQuality)
+    {
+        $minResolution = 300 * 300;
+        $maxResolution = 1000 * 1000;
+        $resolution = $width * $height;
+
+        if ($resolution >= $maxResolution) {
+            return $baseQuality;
+        } elseif ($resolution <= $minResolution) {
+            return 100;
+        } else {
+            return ceil(100 - ($resolution - $minResolution) * 0.000027473);
+        }
+    }
+
+    /**
      * React to created event
      *
      * Handle initial image saving
@@ -109,6 +137,12 @@ abstract class ImageCastBase extends CustomCastBase
     {
         if (is_callable($this->storeImagesCallback)) {
             ($this->storeImagesCallback)();
+
+            // It appears that this callback somehow does not get unset properly,
+            // so, we'll fo it manually.
+            // It takes lots of memory, especially while seeding.
+            // This cold be due to cloning in callback or callback itself ...
+            unset($this->storeImagesCallback);
         }
     }
 
