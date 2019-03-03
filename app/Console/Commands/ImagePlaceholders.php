@@ -40,7 +40,7 @@ class ImagePlaceholders extends Command
 
         // Create placeholder images for default and app specific resolutions
         foreach ($resolutions as $key => $resolution) {
-            $filename = $key == 'default'
+            $filename = $key === 'default'
                 ? 'placeholder.png' // Default placeholder
                 : 'placeholder-' . $resolution . '.png';
 
