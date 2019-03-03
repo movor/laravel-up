@@ -57,7 +57,7 @@ abstract class ImageCastBase extends CustomCastBase
                 $originalImage = clone $image;
 
                 // Store original
-                $image->save(storage_path_app($newValue), $imageQuality);
+                $image->save(storage_path('app/' . $newValue), $imageQuality);
 
                 // Store other image sizes
                 foreach (static::imageSizes() as $imageSize) {
@@ -69,7 +69,7 @@ abstract class ImageCastBase extends CustomCastBase
 
                     // Save image with defined quality
                     (clone $originalImage)->fit($width, $height)
-                        ->save(storage_path_app($variantRelPath), $imageQuality);
+                        ->save(storage_path('app/' . $variantRelPath), $imageQuality);
                 }
             };
         } elseif (!is_null($newValue)) {

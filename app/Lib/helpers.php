@@ -97,23 +97,6 @@ function chance($percent = 50, $win = true, $loose = false)
 }
 
 /**
- * Storage path including prefix app dir
- *
- * @param string $path
- *
- * @return string
- */
-function storage_path_app($path = '')
-{
-    // Make sure we do not have leading slash in path
-    if (str_start($path, '/')) {
-        $path = ltrim($path, '/');
-    }
-
-    return storage_path('app' . ($path ? '/' . $path : ''));
-}
-
-/**
  * Generate valid RFC 4211 compliant Universally Unique Identifiers (UUID)
  * version 3, 4 and 5.
  *
@@ -140,4 +123,40 @@ function uuid()
         // 48 bits for "node"
         mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
     );
+}
+
+/**
+ * Get list of all image resolutions used in application
+ *
+ * @return array
+ */
+function getImageResolutions()
+{
+    $files = scandir(app_path('Lib/ImageVariations'));
+    $allSizes = [];
+
+    // Get image variations base class and namespace
+    $baseClass = \App\Lib\ImageVariations\ImageVariationsBase::class;
+    $namespace = explode("\\", $baseClass);
+    array_pop($namespace);
+    $namespace = implode("\\", $namespace);
+
+    // Go through all ImageVariationsBase children and run getSizes method
+    // to get all project image sizes
+    for ($i = 0; $i < count($files); $i++) {
+        if (substr($files[$i], -4) == '.php') {
+            $className = rtrim($files[$i], '.php');
+            $fullClassName = $namespace . '\\' . $className;
+
+            if (is_subclass_of($fullClassName, $baseClass)) {
+                foreach ($fullClassName::getSizes() as $size) {
+                    $allSizes[] = $size;
+                }
+            }
+        }
+    }
+
+    $uniqueSizes = array_unique($allSizes);
+
+    return $uniqueSizes;
 }

@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Lib\ImageVariations\ImageVariations_16_9;
 use File;
 use Illuminate\Console\Command;
 
@@ -20,7 +19,7 @@ class ImagePlaceholders extends Command
      *
      * @var string
      */
-    protected $description = 'Generate Image placeholders from application specific image variations';
+    protected $description = 'Generate image placeholders';
 
     /**
      * Execute the console command.
@@ -29,27 +28,23 @@ class ImagePlaceholders extends Command
      */
     public function handle()
     {
+        // Placeholder images base url and storage path
+        $url = 'http://via.placeholder.com/';
         $storagePath = storage_path('app/uploads/placeholders/');
 
         // Remove old placeholders if any
         File::delete(File::glob($storagePath . '*.png'));
 
-        // Placeholder images base url and storage path
-        $url = 'http://via.placeholder.com/';
+        $resolutions = getImageResolutions();
+        $resolutions['default'] = '1920x1080';
 
-        // Get unique resolutions
-        $imageResolutions = array_unique(array_merge(
-        // Add all image variations here
-            array_values(ImageVariations_16_9::getSizes()),
-            ['1920x1080']
-        ));
+        // Create placeholder images for default and app specific resolutions
+        foreach ($resolutions as $key => $resolution) {
+            $filename = $key == 'default'
+                ? 'placeholder.png' // Default placeholder
+                : 'placeholder-' . $resolution . '.png';
 
-        foreach ($imageResolutions as $imageResolution) {
-            $filename = $imageResolution == '1920x1080'
-                ? 'placeholder.png' // Original placeholder (without resize)
-                : 'placeholder-' . $imageResolution . '.png';
-
-            file_put_contents($storagePath . $filename, file_get_contents($url . $imageResolution));
+            file_put_contents($storagePath . $filename, file_get_contents($url . $resolution));
         }
 
         return 1;
