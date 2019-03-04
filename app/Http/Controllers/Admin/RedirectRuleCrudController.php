@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\RedirectRule;
 use Illuminate\Http\Request;
 
-class RedirectRuleCrudController extends BaseCrudController
+class RedirectRuleCrudController extends AbstractCrudController
 {
     public function setup()
     {

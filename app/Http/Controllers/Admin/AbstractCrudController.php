@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\CustomCasts\ImageCastBase;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-abstract class BaseCrudController extends CrudController
+abstract class AbstractCrudController extends CrudController
 {
     protected $dateTimeFields = [];
 
@@ -46,9 +47,15 @@ abstract class BaseCrudController extends CrudController
             $request = request();
         }
 
+        // Handle datetime fields
+        // TODO.FOR:vkovic
+        // Date fields should be automatically retrieved like fields from image logic below
         if ($this->dateTimeFields) {
             $this->handleDateTimeFields($request);
         }
+
+        // Handle image fields
+        $this->handleImageFields($request);
 
         return parent::updateCrud($request);
     }
@@ -62,6 +69,33 @@ abstract class BaseCrudController extends CrudController
                 continue;
             }
         }
+    }
+
+    protected function handleImageFields(Request $request)
+    {
+        foreach ($this->getImageFields()as $field) {
+            if (strpos($request->$field, 'data:image') !== 0 && $request->$field !== null) {
+                $request->request->remove($field);
+            }
+        }
+    }
+
+    protected function getImageFields()
+    {
+        // TODO.FOR:vkovic.SEE:https://trello.com/c/pTvO28N1/1-cast-fileds-shoud-be-available
+        $reflection = new \ReflectionClass($this->crud->model);
+        $property = $reflection->getProperty('casts');
+        $property->setAccessible(true);
+        $modelCasts = $property->getValue($this->crud->model);
+
+        $imageCastFields = [];
+        foreach ($modelCasts as $attribute => $castClass) {
+            if (is_subclass_of($castClass, ImageCastBase::class)) {
+                $imageCastFields[] = $attribute;
+            }
+        }
+
+        return $imageCastFields;
     }
 
     public function isEditRequest()

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class TagCrudController extends BaseCrudController
+class TagCrudController extends AbstractCrudController
 {
     public function setup()
     {

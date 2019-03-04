@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
 
-class NewsletterCrudController extends BaseCrudController
+class NewsletterCrudController extends AbstractCrudController
 {
     public function setup()
     {

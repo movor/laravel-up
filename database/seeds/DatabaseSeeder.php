@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
         // Delete all previous article featured images before seeding
         $deletePattern = ArticleFeaturedImageCast::storageDir();
-        File::delete(File::glob(storage_path_app($deletePattern) . '/*'));
+        File::delete(File::glob(storage_path('app/' . $deletePattern) . '/*'));
 
         // Disable article model events and create some articles
         factory(Article::class, 20)->withoutEvents()->create();

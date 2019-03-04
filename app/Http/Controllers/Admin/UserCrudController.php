@@ -3,7 +3,7 @@
 use App\Models\BackpackUser as User;
 use Illuminate\Http\Request;
 
-class UserCrudController extends BaseCrudController
+class UserCrudController extends AbstractCrudController
 {
     public function setup()
     {
