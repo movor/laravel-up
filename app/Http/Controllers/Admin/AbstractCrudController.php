@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\CustomCasts\ImageCastBase;
+use App\CustomCasts\ImageCastBase;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\CustomCasts;
+namespace App\CustomCasts;
 
 use App\Lib\ImageVariations\ImageVariations_16_9;
 

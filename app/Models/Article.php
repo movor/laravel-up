@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Events\ArticlePublishedEvent;
-use App\Models\CustomCasts\ArticleFeaturedImageCast;
+use App\CustomCasts\ArticleFeaturedImageCast;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

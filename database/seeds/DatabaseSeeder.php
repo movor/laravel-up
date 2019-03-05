@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Article;
-use App\Models\CustomCasts\ArticleFeaturedImageCast;
+use App\CustomCasts\ArticleFeaturedImageCast;
 use App\Models\Newsletter;
 use App\Models\Tag;
 use App\Models\User;
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         File::delete(File::glob(storage_path('app/' . $deletePattern) . '/*'));
 
         // Disable article model events and create some articles
-        factory(Article::class, 20)->withoutEvents()->create();
+        factory(Article::class, 10)->withoutEvents()->create();
 
         //
         // Pivot: Articles and tags (each article should have exactly one primary tag)
