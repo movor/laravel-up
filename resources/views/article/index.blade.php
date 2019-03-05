@@ -14,14 +14,14 @@
 
                                 @php
 
-                                    $badgeColor = in_array($tag->name, explode('~', Request::query('tag')))
+                                    $badgeColor = in_array($tag->slug, explode('~', Request::query('tag')))
                                         ? 'badge-primary'
                                         : 'badge-secondary';
 
                                 @endphp
 
                                 <span class="badge {{ $badgeColor }} cursor-pointer"
-                                      data-name="{{ $tag->name }}"
+                                      data-slug="{{ $tag->slug }}"
                                 >
                                     {{ $tag->name }}
                                 </span>
@@ -94,7 +94,7 @@
 
         // Filter by url query tags
         $('#filter .badge').click(function (event) {
-            const clickedTag = $(event.target).data('name'),
+            const clickedTag = $(event.target).data('slug'),
                 query = new URLSearchParams(window.location.search),
                 queryTag = query.get('tag'),
                 queryTags = queryTag !== null

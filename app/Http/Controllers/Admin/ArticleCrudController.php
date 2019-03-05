@@ -6,7 +6,6 @@ use App\Models\Admin\Article;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -221,16 +220,12 @@ class ArticleCrudController extends AbstractCrudController
 
     public function store(Request $request)
     {
-        // Artificially add slug to the request object
-        $request->request->set('slug', str_slug($request->title));
-
         // Set title case
         $request->request->set('title', title_case($request->title));
 
         $this->validate($request, [
             'title' => 'required|min:5|max:128',
             'summary' => 'required|min:30|max:255',
-            'slug' => 'required|unique:articles,slug',
             'body' => 'required',
         ]);
 
@@ -241,19 +236,12 @@ class ArticleCrudController extends AbstractCrudController
 
     public function update(Request $request)
     {
-        // Artificially add slug to the request object
-        $request->request->set('slug', str_slug($request->title));
-
         // Set title case
         $request->request->set('title', title_case($request->title));
 
         $this->validate($request, [
             'title' => 'required|min:5|max:128',
             'summary' => 'required|min:30|max:255',
-            'slug' => [
-                'required',
-                Rule::unique('articles', 'slug')->ignore(\Request::segment(3))
-            ],
             'body' => 'required',
         ]);
 

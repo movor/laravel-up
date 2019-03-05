@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use App\Events\ArticlePublishedEvent;
 use App\CustomCasts\ArticleFeaturedImageCast;
+use App\Events\ArticlePublishedEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Parsedown;
 use Vkovic\LaravelCustomCasts\HasCustomCasts;
-use Vkovic\LaravelDbRedirector\Models\RedirectRule;
 
 class Article extends Model
 {
-    use HasCustomCasts;
+    use HasCustomCasts, DisplayableTrait;
 
     protected $guarded = ['id'];
 
@@ -35,25 +34,6 @@ class Article extends Model
             // Fire custom event "published", when article is published
             if ($article->isDirty('published_at')) {
                 $article->fireModelEvent('published');
-            }
-        });
-
-        static::updated(function (Article $article) {
-            // Create 301 redirect when slug changes
-            if ($article->isDirty('slug')) {
-                RedirectRule::create([
-                    'origin' => 'article/' . $article->getOriginal('slug'),
-                    'destination' => 'article/' . $article->slug
-                ]);
-            }
-        });
-
-        static::deleted(function (Article $article) {
-            // Remove redirects when post is deleted
-            try {
-                RedirectRule::deleteChainedRecursively('article/' . $article->slug);
-            } catch (\Exception $e) {
-                // ...
             }
         });
     }
@@ -119,8 +99,19 @@ class Article extends Model
             : $query->whereNull('published_at');
     }
 
-    public function getUrl()
+    public static function getBaseUri()
     {
-        return url('article/' . $this->slug);
+        return 'article';
+    }
+
+    /**
+     * By default slug will be models name.
+     * This can be overridden in child model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return ['slug' => ['source' => 'title']];
     }
 }

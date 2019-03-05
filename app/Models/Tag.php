@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
+    use Sluggable;
+
     protected $guarded = ['id'];
 
     /**
@@ -20,5 +23,10 @@ class Tag extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('name', 'asc');
+    }
+
+    public function sluggable()
+    {
+        return ['slug' => ['source' => 'name']];
     }
 }

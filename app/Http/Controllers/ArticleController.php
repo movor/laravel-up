@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Models\Tag;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
-use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Request;
 
@@ -21,7 +20,7 @@ class ArticleController extends Controller
         if ($queryTag = Request::query('tag')) {
             foreach (explode('~', $queryTag) as $filterTag) {
                 $query->whereHas('tags', function (Builder $query) use ($filterTag) {
-                    $query->where('name', $filterTag);
+                    $query->where('slug', $filterTag);
                 });
             }
         }

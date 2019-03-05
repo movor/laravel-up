@@ -30,9 +30,6 @@ class TagCrudController extends AbstractCrudController
 
     public function store(Request $request)
     {
-        // Name will always be slugified
-        $request->merge(['name' => str_slug($request->name)]);
-
         $this->validateFields($request);
 
         return parent::storeCrud($request);
@@ -40,9 +37,6 @@ class TagCrudController extends AbstractCrudController
 
     public function update(Request $request)
     {
-        // Name will always be converted to slug
-        $request->merge(['name' => str_slug($request->name)]);
-
         $this->validateFields($request);
 
         return parent::updateCrud();
