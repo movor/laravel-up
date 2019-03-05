@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Models\BackpackUser as User;
+use App\Models\Admin\User;
 use Illuminate\Http\Request;
 
 class UserCrudController extends AbstractCrudController

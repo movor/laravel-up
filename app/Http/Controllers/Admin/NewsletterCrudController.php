@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Newsletter;
+use App\Models\Admin\Newsletter;
 use Illuminate\Http\Request;
 
 class NewsletterCrudController extends AbstractCrudController

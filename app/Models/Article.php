@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Events\ArticlePublishedEvent;
 use App\CustomCasts\ArticleFeaturedImageCast;
-use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Parsedown;
@@ -13,7 +12,7 @@ use Vkovic\LaravelDbRedirector\Models\RedirectRule;
 
 class Article extends Model
 {
-    use CrudTrait, HasCustomCasts;
+    use HasCustomCasts;
 
     protected $guarded = ['id'];
 

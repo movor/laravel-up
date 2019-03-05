@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Article;
+use App\Models\Admin\Article;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
 use Backpack\CRUD\CrudTrait;
 use Tightenco\Parental\HasParentModel;
 
-class BackpackUser extends User
+class User extends \App\Models\User
 {
     use HasParentModel, CrudTrait;
 

@@ -43,16 +43,8 @@ class ArticleController extends Controller
 
     public function view($slug)
     {
-        $query = Article::where('slug', $slug);
-
-        // If admin is logged in, allow view of all articles,
-        // not only published ones
-        if (!Auth::check()) {
-            $query->published();
-        }
-
         /* @var Article $article */
-        $article = $query->firstOrFail();
+        $article = Article::where('slug', $slug)->published()->firstOrFail();
 
         // Featured articles (exclude current)
         $featuredArticles = Article::where('slug', '!=', $slug)

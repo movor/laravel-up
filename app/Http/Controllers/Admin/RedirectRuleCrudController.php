@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\RedirectRule;
+use App\Models\Admin\RedirectRule;
 use Illuminate\Http\Request;
 
 class RedirectRuleCrudController extends AbstractCrudController
@@ -55,6 +55,6 @@ class RedirectRuleCrudController extends AbstractCrudController
 
     public function update(Request $request)
     {
-        return parent::updateCrud();
+        return parent::updateCrud($request);
     }
 }

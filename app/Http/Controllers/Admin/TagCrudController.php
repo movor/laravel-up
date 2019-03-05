@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Tag;
+use App\Models\Admin\Tag;
 use Illuminate\Http\Request;
 
 class TagCrudController extends AbstractCrudController
