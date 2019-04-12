@@ -17,14 +17,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: laravel_up
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - 3306:3306
     volumes:
       - db-volume:/var/lib/mysql
 
   node:
-    image: node:10.15.1-stretch-slim
+    image: node:10-jessie-slim
     user: node
     working_dir: /home/node/app
     environment:
@@ -35,7 +34,12 @@ services:
       - 80
     depends_on:
       - web
-    command: bash -c "npm install && npm run watch-poll"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        yarn
+        yarn watch-poll
 
   composer:
     image: composer:1.8.3

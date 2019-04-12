@@ -2,7 +2,7 @@
 FROM php:7.2-apache
 
 # Install requirements for PHP extensions
-RUN apt-get update && apt-get install libpng-dev libzip-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev -y
+RUN apt-get update && apt-get install graphviz libpng-dev libzip-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev -y
 
 # Install PHP extensions and enable debuging
 RUN docker-php-ext-install pdo_mysql
