@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Vkovic\LaravelDbRedirector\Providers\DbRedirectorServiceProvider::class,
+        Gverschuur\RobotsTxt\RobotsTxtProvider::class,
 
         /*
          * Application Service Providers...
