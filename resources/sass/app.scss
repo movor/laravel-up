@@ -4,6 +4,8 @@
 // Bootstrap functionality
 @import "~bootstrap/scss/functions";
 @import "bootstrap/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~bootstrap/scss/mixins/border-radius";
 
 // Project specific styles
-@import "layout_error/style";
+@import "custom";

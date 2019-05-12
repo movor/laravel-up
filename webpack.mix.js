@@ -1,6 +1,15 @@
 let mix = require('laravel-mix');
 mix.disableNotifications();
 
+// Optimize npm CPU usage while using watch option
+mix.webpackConfig({
+    watchOptions: {
+        aggregateTimeout: 2000,
+        poll: 2000,
+        ignored: /node_modules/
+    }
+});
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,48 +21,19 @@ mix.disableNotifications();
  |
  */
 
-//
-// Watch config
-//
+if (process.env.NODE_ENV === 'production') {
+    mix.js('resources/js/vendor.js', 'public/js/vendor.min.js')
+        .js('resources/js/app.js', 'public/js/app.min.js')
+        .sass('resources/sass/vendor.scss', 'public/css/vendor.min.css')
+        .sass('resources/sass/app.scss', 'public/css/app.min.css')
+        .version();
+} else {
+    // Disable mix-manifest.json on development
+    Mix.manifest.refresh = function () {};
 
-if (process.env.WATCH === 'all') {
     mix.js('resources/js/vendor.js', 'public/js')
         .js('resources/js/app.js', 'public/js')
         .sass('resources/sass/vendor.scss', 'public/css')
-        .sass('resources/sass/layout_default.scss', 'public/css')
-        .sass('resources/sass/layout_error.scss', 'public/css')
+        .sass('resources/sass/app.scss', 'public/css')
         .sourceMaps();
-}
-// Local: compile only app assets (without large vendor ones)
-// Used only for watching, to speed up building process
-else if (process.env.WATCH === 'app') {
-    mix.js('resources/js/app.js', 'public/js')
-        .sass('resources/sass/layout_default.scss', 'public/css')
-        .sass('resources/sass/layout_error.scss', 'public/css')
-        .sourceMaps();
-}
-
-//
-// Build config
-//
-
-if (typeof process.env.WATCH === 'undefined') {
-    // Development: Compile all assets, non minified, without file versions
-    if (process.env.NODE_ENV === 'development') {
-        mix.js('resources/js/vendor.js', 'public/js')
-            .js('resources/js/app.js', 'public/js')
-            .sass('resources/sass/vendor.scss', 'public/css')
-            .sass('resources/sass/layout_default.scss', 'public/css')
-            .sass('resources/sass/layout_error.scss', 'public/css')
-            .sourceMaps();
-    }
-    // Production: compile all assets with versions, minified
-    else if (process.env.NODE_ENV == 'production') {
-        mix.js('resources/js/vendor.js', 'public/js')
-            .js('resources/js/app.js', 'public/js')
-            .sass('resources/sass/vendor.scss', 'public/css')
-            .sass('resources/sass/layout_default.scss', 'public/css')
-            .sass('resources/sass/layout_error.scss', 'public/css')
-            .version();
-    }
 }

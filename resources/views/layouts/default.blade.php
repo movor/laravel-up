@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-
-        @includeWhen(App::environment('production') && env('GOOGLE_ANALYTICS_KEY'), 'partials.google_analytics')
-
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {!! SEOMeta::generate() !!}
         {!! OpenGraph::generate() !!}
@@ -18,8 +14,8 @@
 
         {{-- Styles --}}
 
-        {{ Html::style(App::environment('production') ? mix('/css/vendor.css') : '/css/vendor.css') }}
-        {{ Html::style(App::environment('production') ? mix('/css/layout_default.css') : '/css/layout_default.css') }}
+        {{ Html::style(App::environment('production') ? mix('/css/vendor.min.css') : '/css/vendor.css') }}
+        {{ Html::style(App::environment('production') ? mix('/css/app.min.css') : '/css/app.css') }}
 
         @yield('css-head')
 
@@ -33,10 +29,12 @@
 
         {{-- /Scripts --}}
 
+        {{-- Google analytics (only on production) --}}
+        @includeWhen(App::environment('production') && env('GOOGLE_ANALYTICS_KEY'), 'partials.google_analytics')
+
     </head>
     <body>
         <div id="app">
-
             <div class="py-5"></div>
 
             @include('partials.header')
@@ -44,7 +42,6 @@
             @includeWhen($messages->any() || $errors->any(), 'partials.flash')
 
             <main>@yield('content')</main>
-
             <div class="py-3"></div>
 
             @include('partials.footer')
@@ -53,8 +50,8 @@
 
         {{-- Bottom Scripts --}}
 
-        {{ Html::script(App::environment('production') ? mix('/js/vendor.js') : '/js/vendor.js') }}
-        {{ Html::script(App::environment('production') ? mix('/js/app.js') : '/js/app.js') }}
+        {{ Html::script(App::environment('production') ? mix('/js/vendor.min.js') : '/js/vendor.js') }}
+        {{ Html::script(App::environment('production') ? mix('/js/app.min.js') : '/js/app.js') }}
 
         @yield('scripts-bottom')
 
