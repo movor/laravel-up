@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  node:
+    image: node:10-jessie-slim
+    working_dir: /home/node/app
+    volumes:
+      - ../../:/home/node/app
+    command: "yarn prod"

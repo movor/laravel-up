@@ -1,37 +1,33 @@
 version: '3'
 
 services:
-  web:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: baito
+    ports:
+      - 3306:3306
+    volumes:
+      - db-volume:/var/lib/mysql
+
+  app:
     build:
       context: .
-      dockerfile: .docker/web/Dockerfile
+      dockerfile: .docker/app/Dockerfile
     depends_on:
       - db
     volumes:
       - ./:/var/www/html/
     ports:
       - 80:80
-
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel_up
-    ports:
-      - 3306:3306
-    volumes:
-      - db-volume:/var/lib/mysql
+      - 443:443
 
   node:
     image: node:10-jessie-slim
-    user: node
     working_dir: /home/node/app
-    environment:
-      NODE_ENV: development
     volumes:
       - ./:/home/node/app
-    expose:
-      - 80
     depends_on:
       - web
     command:
