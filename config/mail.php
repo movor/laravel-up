@@ -1,6 +1,6 @@
 <?php
 
-$data = [
+return [
     /*
     |--------------------------------------------------------------------------
     | Mail Driver
@@ -119,25 +119,3 @@ $data = [
         ],
     ],
 ];
-
-/*
-|--------------------------------------------------------------------------
-| Global "To" Address
-|--------------------------------------------------------------------------
-|
-| You may wish for all e-mails sent by your application to be sent to the
-| same address, no matter "to" is set in the code. Handy for development.
-|
-*/
-
-$mailForceRecipient = env('MAIL_FORCE_RECIPIENT');
-
-if ($mailForceRecipient !== null && $mailForceRecipient !== '') {
-    $data['to'] = [
-        'address' => $mailForceRecipient,
-        // Set recipient name to be email in case it's not defined in .env file
-        'name' => env('MAIL_FORCE_RECIPIENT_NAME', $mailForceRecipient)
-    ];
-}
-
-return $data;
