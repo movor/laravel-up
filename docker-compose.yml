@@ -5,7 +5,7 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: baito
+      MYSQL_DATABASE: laravel_up
     ports:
       - 3306:3306
     volumes:
@@ -21,7 +21,6 @@ services:
       - ./:/var/www/html/
     ports:
       - 80:80
-      - 443:443
 
   node:
     image: node:10-jessie-slim
@@ -29,7 +28,7 @@ services:
     volumes:
       - ./:/home/node/app
     depends_on:
-      - web
+      - app
     command:
       - /bin/sh
       - -c
@@ -42,7 +41,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - web
+      - app
     command: install --ignore-platform-reqs --no-scripts
 
 volumes:

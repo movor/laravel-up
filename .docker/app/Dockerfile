@@ -11,7 +11,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 # Copy vhost configuration
-COPY .docker/web/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY .docker/app/vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Apache
 RUN a2enmod rewrite
