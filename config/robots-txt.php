@@ -5,6 +5,7 @@ return [
         'production' => [
             '*' => [
                 '/q', // Exclude search
+                '/admin' // Exclude admin
             ]
         ],
     ]
