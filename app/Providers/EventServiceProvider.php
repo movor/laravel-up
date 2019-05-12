@@ -31,6 +31,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Sometimes we need to disable subscribers
+        if (env('DISABLE_EVENT_SUBSCRIBERS') === true) {
+            $this->subscribe = [];
+        }
+
         parent::boot();
 
         //
