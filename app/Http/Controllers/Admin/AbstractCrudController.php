@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\CustomCasts\ImageCastBase;
+use App\Models\CustomCasts\ImageCastBase;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 abstract class AbstractCrudController extends CrudController
 {
     protected $dateTimeFields = [];
+    protected $editedModel;
 
     public function __construct()
     {
@@ -28,15 +30,28 @@ abstract class AbstractCrudController extends CrudController
         }
     }
 
+    public function getEditedModel()
+    {
+        if (!($this->crud->model instanceof Model)) {
+            $message = 'Crud model not yet assigned';
+            $message .= '. You should use `$this->crud->setModel($modelClass)`';
+            $message .= ' before calling `getEditModel` method';
+
+            throw new \Exception($message);
+        }
+
+        $modelClass = $this->crud->model;
+
+        return $this->editedModel ?? ($this->editedModel = $modelClass::find(\Request::segment(3)));
+    }
+
     public function storeCrud(Request $request = null)
     {
         if (!$request) {
             $request = request();
         }
 
-        if ($this->dateTimeFields) {
-            $this->handleDateTimeFields($request);
-        }
+        $this->handleDateTimeFields($request);
 
         return parent::storeCrud($request);
     }
@@ -47,14 +62,7 @@ abstract class AbstractCrudController extends CrudController
             $request = request();
         }
 
-        // Handle datetime fields
-        // TODO.FOR:vkovic
-        // Date fields should be automatically retrieved like fields from image logic below
-        if ($this->dateTimeFields) {
-            $this->handleDateTimeFields($request);
-        }
-
-        // Handle image fields
+        $this->handleDateTimeFields($request);
         $this->handleImageFields($request);
 
         return parent::updateCrud($request);
@@ -71,31 +79,28 @@ abstract class AbstractCrudController extends CrudController
         }
     }
 
+    /**
+     * When editing model and leave image as is, Backpack will leave image field as full url and
+     * custom casts will remove it because it's not base 64 encoded image.
+     *
+     * @param Request $request
+     *
+     * @throws \Exception
+     */
     protected function handleImageFields(Request $request)
     {
-        foreach ($this->getImageFields()as $field) {
-            if (strpos($request->$field, 'data:image') !== 0 && $request->$field !== null) {
-                $request->request->remove($field);
+        // Get all model casts
+        $casts = $this->getEditedModel()->getCustomCasts();
+
+        // Filter only image casts
+        foreach ($casts as $attribute => $castClass) {
+            if (
+                is_subclass_of($castClass, ImageCastBase::class)
+                && !starts_with($this->request->get($attribute), 'data:image')
+            ) {
+                $request->request->remove($attribute);
             }
         }
-    }
-
-    protected function getImageFields()
-    {
-        // TODO.FOR:vkovic.SEE:https://trello.com/c/pTvO28N1/1-cast-fileds-shoud-be-available
-        $reflection = new \ReflectionClass($this->crud->model);
-        $property = $reflection->getProperty('casts');
-        $property->setAccessible(true);
-        $modelCasts = $property->getValue($this->crud->model);
-
-        $imageCastFields = [];
-        foreach ($modelCasts as $attribute => $castClass) {
-            if (is_subclass_of($castClass, ImageCastBase::class)) {
-                $imageCastFields[] = $attribute;
-            }
-        }
-
-        return $imageCastFields;
     }
 
     public function isEditRequest()
@@ -108,4 +113,3 @@ abstract class AbstractCrudController extends CrudController
         return !$this->isEdit();
     }
 }
-
