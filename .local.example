@@ -1,0 +1,26 @@
+#
+#--------------------------------------------------------------------------
+# Local (development) environment
+#--------------------------------------------------------------------------
+#
+
+#
+# Mail
+#
+
+# Force mail recipient to be always the same (set valid email address here)
+#MAIL_FORCE_RECIPIENT=vlada.kovic@gmail.com
+
+#
+# Seeding
+#
+
+# While seeding in dev env, how much chance there is to use image across models
+#DEV_SEED_IMAGE_CHANCE=0
+
+#
+# Events and notifications
+#
+
+# This will prevent all event subscribers to react on events
+#DISABLE_EVENT_SUBSCRIBERS=true

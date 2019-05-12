@@ -8,10 +8,10 @@
 Thumbs.db
 Icon?
 .Trashes
-ehthumbs.db
 *.log
 *.log*
 *.swp
+*.swo
 
 #
 # PhpStorm
@@ -27,7 +27,7 @@ ehthumbs.db
 
 npm-debug.log
 yarn-error.log
-.env
+*.env
 /.vagrant
 /node_modules
 /public/hot
