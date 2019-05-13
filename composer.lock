@@ -3468,26 +3468,26 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "3.29.0",
+            "version": "3.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "94e104cff2b970cd87aeaf86c59d7a45113bf89e"
+                "reference": "42dd2120577d9a4c6937773d7a233fffe72a06c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/94e104cff2b970cd87aeaf86c59d7a45113bf89e",
-                "reference": "94e104cff2b970cd87aeaf86c59d7a45113bf89e",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/42dd2120577d9a4c6937773d7a233fffe72a06c7",
+                "reference": "42dd2120577d9a4c6937773d7a233fffe72a06c7",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1",
-                "spatie/image": "^1.5.3",
+                "spatie/image": "^1.4",
                 "spatie/temporary-directory": "^1.1",
-                "symfony/process": "^4.2"
+                "symfony/process": "^3.0|^4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.1|^7.5",
+                "phpunit/phpunit": "^6.1|^7.0",
                 "spatie/phpunit-snapshot-assertions": "^1.0"
             },
             "type": "library",
@@ -3520,7 +3520,7 @@
                 "screenshot",
                 "webpage"
             ],
-            "time": "2019-04-24T18:28:14+00:00"
+            "time": "2018-10-18T17:24:07+00:00"
         },
         {
             "name": "spatie/crawler",
@@ -3583,21 +3583,20 @@
         },
         {
             "name": "spatie/image",
-            "version": "1.7.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "04fc75fc203d5aa944f3c667d5b55f2203c9d64f"
+                "reference": "d4cb6afff1b98fd6e17396d91e0e584c3d91bb23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/04fc75fc203d5aa944f3c667d5b55f2203c9d64f",
-                "reference": "04fc75fc203d5aa944f3c667d5b55f2203c9d64f",
+                "url": "https://api.github.com/repos/spatie/image/zipball/d4cb6afff1b98fd6e17396d91e0e584c3d91bb23",
+                "reference": "d4cb6afff1b98fd6e17396d91e0e584c3d91bb23",
                 "shasum": ""
             },
             "require": {
-                "ext-exif": "*",
-                "league/glide": "^1.4",
+                "league/glide": "^1.2",
                 "php": "^7.0",
                 "spatie/image-optimizer": "^1.0",
                 "spatie/temporary-directory": "^1.0.0",
@@ -3632,7 +3631,7 @@
                 "image",
                 "spatie"
             ],
-            "time": "2019-04-17T06:45:22+00:00"
+            "time": "2018-05-05T21:44:52+00:00"
         },
         {
             "name": "spatie/image-optimizer",
