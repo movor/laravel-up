@@ -10,27 +10,18 @@ Maybe some of you will find it interesting.
 
 ---
 
-Some of the features:
-- admin panel
-- blog
-- custom artisan commands
-- custom casts used for model images
-- page redirection management
-- sitemap generator
-- auto robots
-- CORS
-- IDE helper
-- optimised npm watch and assets compiling
-- Disqus (via custom Vue component)
-- Google recaptcha
+## Docker
 
----
+### Require php (composer) package
 
-TODO: explain
-- seeding tricks and `artisan db:summon` command
-- admin login
-- sitemap generator (`/etc/hosts` file needs to be edited)
-- custom artisan commands
-- image placeholders
-- image custom casts
-- npm watch and assets compiling (`npm watch-app` and `npm watch-poll-app`)
+```bash
+docker-compose run --no-deps composer require provider/package
+# Sometimes we need to ignore platform requirements
+docker-compose run --no-deps composer require provider/package --ignore-platform-reqs
+```
+
+### Build assets for production
+
+```bash
+docker-compose run --no-deps node yarn prod
+```

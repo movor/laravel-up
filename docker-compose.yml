@@ -27,8 +27,6 @@ services:
     working_dir: /home/node/app
     volumes:
       - ./:/home/node/app
-    depends_on:
-      - app
     command:
       - /bin/sh
       - -c
@@ -40,9 +38,7 @@ services:
     image: composer:1.8.3
     volumes:
       - .:/app
-    depends_on:
-      - app
-    command: install --ignore-platform-reqs --no-scripts
+    command: install --ignore-platform-reqs
 
 volumes:
   db-volume:
