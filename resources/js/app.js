@@ -1,15 +1,9 @@
-// App components
-import Disqus from "./components/Disqus";
+// Import app components
+import AppDisqus from './components/AppDisqus';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// Add components to Vue
+Vue.component('app-disqus', AppDisqus);
 
-const app = new Vue({
-    components: {
-        'appDisqus': Disqus
-    },
+new Vue({
     el: '#app'
 });
